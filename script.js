@@ -5,7 +5,7 @@ var showQuestionsBtn = document.querySelector(".show-questions");
 var pointsContainer = document.querySelector(".points");
 var pointsSpan = document.querySelector(".points span");
 const quizContainer = document.getElementById("quiz");
-var points = 0;
+let points = 0;
 
 var myQuestions = [
     {
@@ -41,7 +41,7 @@ function buildQuiz() {
     checkPointsBtn.classList.add('show');
     showCorrectAnswersBtn.classList.add('show');
     clearBtn.classList.add('show');
-
+    points = 0;
     const output = [];
     myQuestions.forEach((currentQuestion, questionNumber) => {
         const answers = [];
@@ -68,6 +68,7 @@ function buildQuiz() {
 }
 
 function showResults() {
+    points = 0;
     const answerContainers = quizContainer.querySelectorAll(".answers");
 
     myQuestions.forEach((currentQuestion, questionNumber) => {
@@ -75,7 +76,7 @@ function showResults() {
         const selector = `input[name=question${questionNumber}]:checked`;
         const userAnswer = (answerContainer.querySelector(selector) || {}).value;
         if (userAnswer === currentQuestion.correctAnswer) {
-            (++points > 3) ? points = 3: ++points;
+            ((points + 1) > 3) ? points = 3: ++points;
             answerContainers[questionNumber].style.color = "lightgreen";
         } else {
             answerContainers[questionNumber].style.color = "red";
@@ -87,6 +88,7 @@ function showResults() {
 }
 
 function showAnswer() {
+    points = 0;
     const answerContainers = quizContainer.querySelectorAll(".answers");
 
     myQuestions.forEach((currentQuestion, questionNumber) => {
@@ -100,7 +102,7 @@ function showAnswer() {
             }
         });
     });
-
+    console.log("punkty: " + points);
     pointsSpan.innerHTML = points;
     pointsContainer.classList.add('show');
 }
